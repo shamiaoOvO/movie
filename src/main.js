@@ -4,22 +4,15 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-/* //axios体验
-import axios from 'axios'
-//配置域名
-axios.defaults.baseURL = "https://m.maizuo.com/"
-//请求拦截器
-axios.interceptors.request.use(function (config) {
-    config.headers = {
-        "X-Client-Info": '{"a":"3000","ch":"1002","v":"5.0.4","e":"16022268592862436788994050"}',
-        "X-Host": "mall.film-ticket.film.list"
-    }
-    return config
-}, function (err) {
-    //错误处理
+//使用懒加载
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad, {
+    loading: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3681478079,2138136230&fm=26&gp=0.jpg"
 })
-axios.get("gateway?cityId=310100&pageNum=1&pageSize=10&type=1&k=6662559")
- */
+
+//定义时间总线(后续需要使用,放在原型上)
+Vue.prototype.eventBus = new Vue()
+
 new Vue({
     router,
     render: h => h(App)

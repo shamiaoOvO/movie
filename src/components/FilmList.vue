@@ -1,42 +1,53 @@
 <template>
-  <div class="list">
+  <div class="list scroll" :style="{ height: height + 'px' }">
     <Loading v-if="loading"></Loading>
     <!-- 展示数据 -->
-    <div
-      class="item"
-      v-for="item in list"
-      :key="item.filmId"
-      @click="goDetail(item.filmId)"
-    >
-      <div class="left">
-        <img :src="item.poster" />
-      </div>
-      <div class="middle">
-        <div>
-          <span>{{ item.name }}</span> <span>{{ item.filmType.name }}</span>
+    <div>
+      <div
+        class="item"
+        v-for="item in data"
+        :key="item.filmId"
+        @click="goDetail(item.filmId)"
+      >
+        <div class="left">
+          <!-- <img :src="item.poster" /> -->
+          <img v-lazy="item.poster" />
         </div>
-        <div v-if="type == 1">
-          <span>观众评分 </span>
-          <span class="grade">{{ item.grade }}</span>
+        <div class="middle">
+          <div>
+            <span>{{ item.name }}</span> <span>{{ item.filmType.name }}</span>
+          </div>
+          <div v-if="type == 1">
+            <span>观众评分 </span>
+            <span class="grade">{{ item.grade }}</span>
+          </div>
+          <div v-else>暂无评分</div>
+          <div>主演：{{ item.actors | parseActor }}</div>
+          <div v-if="type == 1">{{ item.nation }} | {{ item.runtime }}分钟</div>
+          <div v-else>上映日期：{{ item.premiereAt | parsePremiereAt }}</div>
         </div>
-        <div v-else>暂无评分</div>
-        <div>主演：{{ item.actors | parseActor }}</div>
-        <div v-if="type == 1">{{ item.nation }} | {{ item.runtime }}分钟</div>
-        <div v-else>上映日期：{{ item.premiereAt | parsePremiereAt }}</div>
+        <div class="right" v-if="type == 1">购票</div>
+        <div class="right" v-else>预购</div>
       </div>
-      <div class="right" v-if="type == 1">购票</div>
-      <div class="right" v-else>预购</div>
     </div>
   </div>
 </template>
 
 <script>
 import Loading from "@/components/Loading";
-import moment from "moment/min/moment-with-locales";
+import BScroll from "better-scroll";
+import moment from "moment";
+import { nowPlayingListData, comingSoonListData } from "@/api/api";
+moment.locale("zh-cn");
 export default {
   data() {
     return {
       loading: true,
+      height: 0,
+      bs: null, //保存better-scroll的实例结果
+      pageNum: 1,
+      flag: true, //控制是否可以向下滑动请求数据
+      data: [], //拼接数据
     };
   },
   props: ["list", "type"],
@@ -44,8 +55,10 @@ export default {
     Loading,
   },
   created() {
+    //当进入页面后将父组件的数据转交给子组件的data
+    this.data = this.list;
     //判断数据是否获取到,如果获取到就去除loading组件
-    if (this.list.length > 0) {
+    if (this.data.length > 0) {
       this.loading = false;
     }
   },
@@ -66,6 +79,43 @@ export default {
     goDetail: function (filmId) {
       this.$router.push({ name: "detail", params: { filmId } });
     },
+    goData: async function () {
+      if (this.flag) {
+        this.pageNum++;
+        if (this.type == 1) {
+          // 正在热映
+          var ret = await nowPlayingListData(this.pageNum);
+        } else {
+          // 即将上映
+          var ret = await comingSoonListData(this.pageNum);
+        }
+        //请求到的数据数量小于10说明数据不足,标记设置为false
+        if (ret.data.data.films.length < 10) {
+          this.flag = false;
+        }
+        this.data = this.data.concat(ret.data.data.films);
+      }
+    },
+  },
+  mounted() {
+    this.height = document.documentElement.clientHeight - 100;
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.bs = new BScroll(".scroll", {
+        pullUpLoad: true,
+        pullDownRefresh: true,
+        click: true,
+      });
+      this.bs.on("pullingUp", () => {
+        this.goData();
+        this.bs.finishPullUp();
+      });
+      this.bs.on("pullingDown", () => {
+        this.goData();
+        this.bs.finishPullDown();
+      });
+    });
   },
 };
 </script>
@@ -167,5 +217,8 @@ export default {
       color: #ff5f16;
     }
   }
+}
+.scroll {
+  overflow: hidden;
 }
 </style>

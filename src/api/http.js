@@ -16,6 +16,9 @@ axios.interceptors.request.use(
         if (info == "info") {
             host = "mall.film-ticket.film.info"
         }
+        if (info == "ticket") {
+            host = "mall.cfg.cinema.banners"
+        }
         //其他的可以继续添加
 
         //请求头

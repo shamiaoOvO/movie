@@ -1,5 +1,14 @@
 <template>
   <div>
-    <h1>电影院</h1>
+    <MovieListTopNav></MovieListTopNav>
   </div>
 </template>
+
+<script>
+import MovieListTopNav from "@/components/MovieListTopNav";
+export default {
+  components: {
+    MovieListTopNav,
+  },
+};
+</script>

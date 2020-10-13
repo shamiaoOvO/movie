@@ -1,6 +1,6 @@
 <template>
   <div class="detail" v-cloak>
-    <div class="film-header">
+    <div class="film-header" :class="{ 'show-film-header': isShow }">
       <div class="goBack">
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAMAAADWZboaAAAAt1BMVEVHcEz///////////////////////////////////////////////////////////////////////////////////97e3saGxyIiYnW1tYdHh9UVVUpKiulpaXLy8s6OzyysrIiIyPx8fEeHyC/v7/5+fklJihCQ0Ntb28bHB1hYWKXl5c0NTZLS0xAQUI4ODk3ODjh4eHr6+s2Nzfq6uptbm5gYGIbHB39/f2VlZdLS0wzNDUZGhs8UYRWAAAAPHRSTlMAGHpLE3cKgEdgVnJfNBZ+cBx9A28js/6sjPvK7p+Q3pn1g/iUgfLYuvzCpeTR2eHiiIXihrvD/YCl0uTUXbEtAAABd0lEQVRIx91W13KDQAw0xnCHARuDe+/dKY7T9f/flTzghCLdMaMXj/eRnZ0T0qqUSveBim96gRWGVuCZfqW4zpCuSMGVRiFhwxEInIY+0qogUFXHHcm6IFGXEa20HaGEY1PKWlNo0KzhylZZaFFuoW8WUP5qkXdtMtrnx4dkzLn/jcgMXY7wlMpVNs+SUs4nMOylvsiME6h6rjawHmfqm/YG6aETzJY5X6V8SykHsJjmvyb9TOVoD/0R5qpElxHKLewOKGHo0tuGThdn/pPsony3A20iHPevMih92MGW9OO1Pj5Gjvqwp63sx1IT4aYLGCi6wIylXp5azuCkaiAvlgY5ZryGzUolDWKplSV6Q5jMlW1rxdIwS7zA8azu+JCWfl+KSRkBM9KEF+fro0BxGJagjPimNyJp/1et/RlNx2l1esC8f2oGDGOscYYpY4RzFgdjXSmW5Fm3JBmrmXMQcM4QzvHDObk4hx7nvGQdtaxTmnXA3zR+AH8JUdNL967cAAAAAElFTkSuQmCC"
@@ -8,7 +8,7 @@
           @click="goBack"
         />
       </div>
-      <div class="title">我和我的家乡</div>
+      <div class="title">{{ film.name }}</div>
       <!---->
     </div>
     <div class="img">
@@ -103,6 +103,7 @@ export default {
       isGrade: true,
       num: 0,
       num2: 1,
+      isShow: false,
     };
   },
   async mounted() {
@@ -136,6 +137,15 @@ export default {
   created() {
     //发起通知,通知APP.vue需要移出底部菜单
     this.eventBus.$emit("footernav", false);
+
+    window.addEventListener("scroll", (e) => {
+      let top = document.documentElement.scrollTop;
+      if (top > 10) {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
+      }
+    });
   },
   beforeDestroy() {
     //发起通知,恢复底部菜单
@@ -152,6 +162,7 @@ export default {
   background-color: rgb(244, 244, 244);
   //   margin-bottom: 50px;
   overflow: hidden;
+
   .film-header {
     position: fixed;
     background-color: hsla(0, 0%, 100%, 0);
@@ -169,6 +180,17 @@ export default {
         width: 30px;
       }
     }
+    .title {
+      font-size: 17px;
+      line-height: 44px;
+      width: 100vw;
+      text-align: center;
+    }
+  }
+  .show-film-header {
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #191a1b;
   }
   .img {
     width: 100%;

@@ -4,3 +4,7 @@ export const nowPlayingListUrl = "gateway?cityId=310100&pageSize=10&type=1&k=897
 export const comingSoonListUrl = "gateway?cityId=310100&pageSize=10&type=2&k=3582978&pageNum="
 
 export const movieDetailUrl = "gateway?k=6624626&filmId="
+
+export const cinemaListUrl = "gateway?cityId=310100&ticketFlag=1&k=4601693"
+
+export const ticketListUrl = "gateway?cityId=310100&k=7215135"

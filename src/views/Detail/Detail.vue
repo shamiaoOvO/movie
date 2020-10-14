@@ -53,7 +53,11 @@
       <div class="actors-title-bar">
         <span class="actors-title-text">演职人员</span>
       </div>
-      <Swiper :key="'actors_' + film.actors.length" :num="num">
+      <Swiper
+        :key="'actors_' + film.actors.length"
+        preview="4"
+        myClassName="actorSwiper"
+      >
         <!-- 循环输出图片信息 -->
         <div
           class="swiper-slide"
@@ -73,7 +77,11 @@
       <div class="photos-title-bar">
         <span class="photos-title-text">剧照</span>
       </div>
-      <Swiper :key="'photos_' + film.photos.length" :num2="num2">
+      <Swiper
+        :key="'photos_' + film.photos.length"
+        preview="2.6"
+        myClassName="photoSwiper"
+      >
         <!-- 循环输出图片信息 -->
         <div
           class="swiper-slide"

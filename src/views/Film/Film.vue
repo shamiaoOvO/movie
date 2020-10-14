@@ -17,7 +17,7 @@ export default {
     FilmListTopNav,
   },
   mounted() {
-    window.addEventListener(
+    /* window.addEventListener(
       "scroll",
       (e) => {
         let top = document.documentElement.scrollTop;
@@ -28,7 +28,7 @@ export default {
         }
       },
       true
-    );
+    ); */
   },
 };
 </script>
@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 .fixed {
   position: fixed;
-  top: 0;
+  top: 0px;
   background: #ffffff;
 }
 </style>

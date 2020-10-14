@@ -13,7 +13,11 @@ Vue.use(VueLazyLoad, {
 //定义时间总线(后续需要使用,放在原型上)
 Vue.prototype.eventBus = new Vue()
 
+//导入vuex的store对象
+import store from '@/store/vuex'
+
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount('#app')

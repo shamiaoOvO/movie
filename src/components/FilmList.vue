@@ -98,7 +98,7 @@ export default {
     },
   },
   mounted() {
-    this.height = document.documentElement.clientHeight - 100;
+    this.height = document.documentElement.clientHeight - 144;
   },
   updated() {
     this.$nextTick(() => {
@@ -122,6 +122,7 @@ export default {
 
 <style lang="scss" scoped>
 .list {
+  padding-top: 44px;
   margin-bottom: 50px;
   .item {
     height: 94px;

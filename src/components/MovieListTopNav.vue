@@ -10,7 +10,9 @@
           data-enter-time="1602495621"
           data-click-fun="track_f_253582"
         >
-          <span data-v-4070467a="">{{ nowadd }}</span>
+          <router-link data-v-4070467a="" to="/city" tag="span">
+            {{ city | cleaner }}
+          </router-link>
           <img
             data-v-4070467a=""
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAMAAAAIAYw9AAAAOVBMVEVHcEwZGhsZGxsZGhskJCQaGhwbGxsZHR0ZGhsZGhsZGhsZGhsZHBwaGhsaGhwZGxsaGh0bGxsZGhsAwt9XAAAAEnRSTlMA5Z7pB2scPfrK6NJskn6fcnH7htMrAAAAVElEQVQI11XNOQKAIBAEwQEXl0NQ+/+PNfDucIIabaGbnqyHXQHKfC9zgaABVD8Xr8CQlgw5SVLKkBdJ8gmIZhGY/BUoha9qKwDEz/fJJP3y1i5GB2jVA/F2X5USAAAAAElFTkSuQmCC"
@@ -153,6 +155,7 @@
 import Loading from "@/components/Loading";
 import { cinemaListData, ticketListData } from "@/api/api";
 import axios from "axios";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -160,8 +163,14 @@ export default {
       ticketlist: [],
       cinemaslist: [],
       hastickets: true,
-      nowadd: "全国",
+      //   nowadd: "",
     };
+  },
+  methods: {
+    // ...mapActions(["setAddress"]),
+  },
+  computed: {
+    ...mapState(["city"]),
   },
   async mounted() {
     let rel = await ticketListData();
@@ -171,12 +180,17 @@ export default {
     if (this.ticketlist.length == 0) {
       this.hastickets = false;
     }
-    var _this = this;
+
+    if (localStorage.getItem("city").length > 0) {
+      this.$store.commit("setCity", localStorage.getItem("city"));
+    }
+
+    //定位获取
+    /* var _this = this;
     getLocation();
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
-        console.log("获取地理位置");
       } else {
         alert("浏览器不支持地理定位。");
       }
@@ -187,7 +201,10 @@ export default {
       axios
         .get(`https://api.i-lynn.cn/poi?location=${lag},${lat}`)
         .then((ret) => {
-          _this.nowadd = ret.data.regeocode.addressComponent.province;
+          let val = ret.data.regeocode.addressComponent.province;
+          _this.$store.commit("setCity", val);
+          //   _this.nowadd = _this.$store.state.city;
+          //   _this.nowadd = val;
         });
     }
     function showError(error) {
@@ -205,7 +222,9 @@ export default {
           alert("定位失败,定位系统失效");
           break;
       }
-    }
+    } */
+    //获取定位城市
+    // this.$store.commit("setCity", this.nowadd);
   },
   components: {
     Loading,
@@ -216,6 +235,14 @@ export default {
     } else {
       this.loading = false;
     }
+
+    //城市选择
+    // this.nowadd = this.$store.state.city;
+  },
+  filters: {
+    cleaner(val) {
+      return val.split('"').join("");
+    },
   },
 };
 </script>

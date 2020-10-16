@@ -56,6 +56,7 @@
       <Swiper
         :key="'actors_' + film.actors.length"
         preview="4"
+        class="actorSwiper"
         myClassName="actorSwiper"
       >
         <!-- 循环输出图片信息 -->
@@ -80,6 +81,7 @@
       <Swiper
         :key="'photos_' + film.photos.length"
         preview="2.6"
+        class="photoSwiper"
         myClassName="photoSwiper"
       >
         <!-- 循环输出图片信息 -->
@@ -109,8 +111,6 @@ export default {
       isHidden: true,
       isupper: false,
       isGrade: true,
-      num: 0,
-      num2: 1,
       isShow: false,
     };
   },

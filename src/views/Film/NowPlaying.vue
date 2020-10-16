@@ -25,7 +25,7 @@ export default {
     var _this = this;
     let lSc = localStorage.getItem("city");
     let lSnc = localStorage.getItem("nowcity");
-    if (lSc == null || lSc.length < 1 || lSnc.length < 1 || lSnc == null) {
+    if (lSc == null || lSnc == null) {
       getLocation();
     }
 

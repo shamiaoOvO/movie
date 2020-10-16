@@ -25,10 +25,17 @@ axios.interceptors.request.use(
         //其他的可以继续添加
 
         //请求头
-        config.headers = {
-            'X-Client-Info': ' {"a":"3000","ch":"1002","v":"5.0.4","e":"16022268592862436788994050","bc":"310100"}',
-            'X-Host': host
+        if (config.headers.authorization) {
+            config.headers = {
+                "authorization": config.headers.authorization
+            }
+        } else {
+            config.headers = {
+                'X-Client-Info': ' {"a":"3000","ch":"1002","v":"5.0.4","e":"16022268592862436788994050","bc":"310100"}',
+                'X-Host': host
+            }
         }
+
         return config
     },
     function (err) {

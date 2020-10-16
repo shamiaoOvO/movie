@@ -1,61 +1,111 @@
 <template>
-  <div>
-    <!---->
-    <div class="web-login">
-      <div class="logo">
-        <img
-          src="https://assets.maizuo.com/h5/mz-auth/public/app/img/logo.19ca0be.png"
-        />
-      </div>
-      <div class="login-form">
-        <div>
+  <div class="web-login">
+    <div class="logo" @click="goback()">
+      <img
+        src="https://assets.maizuo.com/h5/mz-auth/public/app/img/logo.19ca0be.png"
+      />
+    </div>
+    <div class="login-form">
+      <div>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
           <div class="form-group">
-            <input
-              type="tel"
-              maxlength="13"
-              placeholder="手机号"
-              class="input-control"
-              v-model="mobile"
-            />
+            <el-form-item label="手机号" prop="mobile">
+              <el-input
+                v-model="ruleForm.mobile"
+                placeholder="请输入手机号"
+                maxlength="11"
+              ></el-input>
+            </el-form-item>
           </div>
           <div class="form-group">
-            <input
-              type=" password"
-              placeholder="密码"
-              class="input-control"
-              v-model="password"
-            />
+            <el-form-item label="密码" prop="password">
+              <el-input
+                placeholder="请输入密码"
+                v-model="ruleForm.password"
+                show-password
+              ></el-input>
+            </el-form-item>
           </div>
-          <div class="login-btn">
-            <span class="submit" @click="subBtn()">登录</span>
-          </div>
-
-          <!---->
-        </div>
+          <el-form-item class="login-btn">
+            <el-button class="submit" @click="subBtn('ruleForm')">
+              登录
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { userLogin } from "@/api/api";
 import axios from "axios";
 export default {
   data() {
     return {
-      mobile: "",
-      password: "",
+      ruleForm: {
+        mobile: "",
+        password: "",
+      },
+      rules: {
+        mobile: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          {
+            pattern: /^1[3-9]\d{9}$/,
+            message: "手机格式不正确",
+            trigger: "change",
+          },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 6,
+            max: 20,
+            message: "长度在 6 到 20 个字符",
+            trigger: "change",
+          },
+        ],
+      },
     };
   },
   methods: {
-    subBtn() {
-      axios
-        .post("/api/v1/login", {
-          mobile: this.mobile,
-          password: this.password,
-        })
-        .then((ret) => {
-          console.log(ret.data);
-        });
+    /* subBtn(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          axios
+            .post("/api/v1/login", {
+              mobile: this.ruleForm.mobile,
+              password: this.ruleForm.password,
+            })
+            .then((ret) => {
+              console.log(ret.data);
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }, */
+    subBtn(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          let ret = await userLogin(this.ruleForm);
+          if (ret.data.code == 666) {
+            //登录成功,存储token,跳转
+            this.$store.commit("updateToken", ret.data.data._token);
+            this.$router.push({ path: "/center" });
+          } else {
+            //登录失败
+            alert(ret.data.info);
+          }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    goback() {
+      this.$router.go(-1);
     },
   },
   created() {
@@ -70,7 +120,8 @@ export default {
 <style lang="scss" scoped>
 .web-login {
   font-size: 15px;
-
+  height: 100%;
+  overflow: hidden;
   .logo {
     margin: 79px auto 40px;
     text-align: center;
@@ -92,21 +143,10 @@ export default {
       margin: 0 25px;
       position: relative;
     }
-    .input-control {
-      height: 15px;
-      line-height: 15px;
-      padding: 20px 0;
-      width: 100%;
-      font-size: 15px;
-      color: #191a1b;
-      border: 0;
-      outline-width: 0;
-    }
     .submit {
       width: 80%;
       height: 44px;
       display: block;
-      line-height: 45px;
       font-size: 16px;
       border-radius: 3px;
       text-align: center;

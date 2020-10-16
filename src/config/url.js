@@ -10,3 +10,7 @@ export const cinemaListUrl = "gateway?cityId=310100&ticketFlag=1&k=4601693"
 export const ticketListUrl = "gateway?cityId=310100&k=7215135"
 
 export const cityListUrl = "gateway?k=9616274"
+
+export const loginUrl = "http://127.0.0.1:3000/api/v1/login"
+
+export const centerUrl = "http://127.0.0.1:3000/api/v1/user_info"

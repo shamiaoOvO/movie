@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div>
     <div class="swiper-wrapper">
       <!-- 插槽 -->
       <slot></slot>
@@ -14,9 +14,9 @@ export default {
   props: ["preview", "myClassName"],
   mounted() {
     //当前异步操作全部操作完成之后再去做里面的内容
-    new Swiper(".swiper-container", {
+    new Swiper("." + this.myClassName, {
       slidesPerView: this.preview,
-      //   spaceBetween: this.myClassName == "photoSwiper" ? 10 : 0,
+      spaceBetween: this.myClassName == "photoSwiper" ? 10 : 0,
     });
   },
 };

@@ -37,4 +37,29 @@ const router = new VueRouter({
     routes
 })
 
+//路由守卫
+router.beforeEach((to, from, next) => {
+    let arr = [
+        //存储需要登录的页面
+        "/cinema"
+    ]
+    if (arr.includes(to.path)) {
+        //返回真,则在需要登录的数组中
+        if (localStorage.getItem('_token')) {
+            next()
+        } else {
+            if (confirm('您还没有登录,是否前往登录')) {
+                next({
+                    path: '/login',
+                    query: {
+                        refer: to.fullPath //fullPath包括地址栏问号后面的传参
+                    }
+                })
+            }
+        }
+    } else {
+        next()
+    }
+})
+
 export default router

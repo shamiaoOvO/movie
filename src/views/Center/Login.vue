@@ -93,7 +93,11 @@ export default {
           if (ret.data.code == 666) {
             //登录成功,存储token,跳转
             this.$store.commit("updateToken", ret.data.data._token);
-            this.$router.push({ path: "/center" });
+            if (this.$route.query.refer) {
+              this.$router.push({ path: this.$route.query.refer });
+            } else {
+              this.$router.push({ path: "/center" });
+            }
           } else {
             //登录失败
             alert(ret.data.info);

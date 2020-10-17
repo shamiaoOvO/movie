@@ -97,11 +97,9 @@ export default {
   },
   methods: {
     chooseCity(cityName, cityId) {
-      localStorage.setItem("city", JSON.stringify(cityName));
-      let val = localStorage.getItem("city");
-      this.$store.commit("setCity", val);
-      this.$router.go(-1);
+      this.$store.commit("setCity", cityName);
       this.$store.commit("setCityId", cityId);
+      this.$router.go(-1);
     },
     goBack: function () {
       this.$router.go(-1);

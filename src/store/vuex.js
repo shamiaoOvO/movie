@@ -7,7 +7,7 @@ export default new Vuex.Store({
         count: 0,
         city: '全国',
         _token: '',
-        cityId: 0,
+        cityId: 310100,
 
     },
     mutations: {

@@ -40,13 +40,13 @@ export default {
         AMap.event.addListener(geolocation, "complete", onComplete);
         AMap.event.addListener(geolocation, "error", onError);
         //城市编码
-        geolocation.getCityInfo((status, result) => {
+        /* geolocation.getCityInfo((status, result) => {
           console.log(result);
-        });
+        }); */
 
         // data是具体的定位信息
         function onComplete(data) {
-          console.log("具体的定位信息", data);
+          //   console.log("具体的定位信息", data);
           let val = data.addressComponent.province;
           val = val.split("市").join("");
           localStorage.setItem("nowcity", JSON.stringify(val));
@@ -54,7 +54,7 @@ export default {
         }
         function onError(data) {
           // 失败 启用 ip定位
-          AMap.plugin("AMap.CitySearch", function () {
+          /* AMap.plugin("AMap.CitySearch", function () {
             var citySearch = new AMap.CitySearch();
             citySearch.getLocalCity(function (status, result) {
               if (status === "complete" && result.info === "OK") {
@@ -67,7 +67,10 @@ export default {
                 67;
               }
             });
-          });
+          }); */
+
+          //定位失败跳转城市选择页面
+          _this.$router.push({ path: "/city" });
         }
       });
     },
@@ -76,7 +79,7 @@ export default {
     //定位获取
     let lSc = localStorage.getItem("city");
     let lSnc = localStorage.getItem("nowcity");
-    if (lSc == null || lSnc == null) {
+    if (lSc == null && lSnc == null) {
       this.getLocation();
     }
   },

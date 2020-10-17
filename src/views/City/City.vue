@@ -30,50 +30,51 @@
       </div>
       <!---->
     </div>
-    <div class="recommend-city">
-      <div class="gprs-city">
-        <div class="city-index-title">GPS定位你所在城市</div>
-        <ul class="city-index-detail cleanfix">
-          <li class="city-item-detail city-item-detail-gprs">
-            <div v-if="gps.length == 0" class="city-item-text">定位失败</div>
-            <div v-else class="city-item-text">{{ city | cleaner }}</div>
-          </li>
-        </ul>
+    <div class="scrollbar">
+      <div class="recommend-city">
+        <div class="gprs-city">
+          <div class="city-index-title">GPS定位你所在城市</div>
+          <ul class="city-index-detail cleanfix">
+            <li class="city-item-detail city-item-detail-gprs">
+              <div class="city-item-text">{{ city | cleaner }}</div>
+            </li>
+          </ul>
+        </div>
+        <div class="hot-city">
+          <div class="city-index-title">热门城市</div>
+          <ul class="city-index-detail cleanfix">
+            <li
+              class="city-item-detail"
+              v-for="item in hotList"
+              :key="item.cityId"
+              @click="chooseCity(item.name, item.cityId)"
+            >
+              <div class="city-item-text">{{ item.name }}</div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="hot-city">
-        <div class="city-index-title">热门城市</div>
-        <ul class="city-index-detail cleanfix">
-          <li
-            class="city-item-detail"
-            v-for="item in hotList"
-            :key="item.cityId"
-            @click="chooseCity(item.name)"
-          >
-            <div class="city-item-text">{{ item.name }}</div>
-          </li>
-        </ul>
-      </div>
+      <van-index-bar
+        :index-list="indexList"
+        class="citybar"
+        :sticky-offset-top="92"
+      >
+        <!-- 城市循环 -->
+        <template v-for="(item, index) in dataList">
+          <van-index-anchor
+            :index="item.index"
+            :key="index"
+            style="background: rgb(247, 248, 250)"
+          />
+          <van-cell
+            @click="chooseCity(val.name, val.cityId)"
+            v-for="(val, key) in item.data"
+            :title="val.name"
+            :key="key"
+          />
+        </template>
+      </van-index-bar>
     </div>
-    <van-index-bar
-      :index-list="indexList"
-      class="citybar"
-      :sticky-offset-top="92"
-    >
-      <!-- 城市循环 -->
-      <template v-for="(item, index) in dataList">
-        <van-index-anchor
-          :index="item.index"
-          :key="index"
-          style="background: rgb(247, 248, 250)"
-        />
-        <van-cell
-          @click="chooseCity(val.name)"
-          v-for="(val, key) in item.data"
-          :title="val.name"
-          :key="key"
-        />
-      </template>
-    </van-index-bar>
   </div>
 </template>
 
@@ -91,16 +92,16 @@ export default {
       dataList: [],
       indexList: [],
       hotList: [],
-      city: "未知",
-      gps: [],
+      city: "定位失败",
     };
   },
   methods: {
-    chooseCity(cityName) {
+    chooseCity(cityName, cityId) {
       localStorage.setItem("city", JSON.stringify(cityName));
       let val = localStorage.getItem("city");
       this.$store.commit("setCity", val);
       this.$router.go(-1);
+      this.$store.commit("setCityId", cityId);
     },
     goBack: function () {
       this.$router.go(-1);
@@ -115,9 +116,8 @@ export default {
     this.indexList = ret[1];
     this.hotList = ret[2];
 
-    if (localStorage.getItem("nowcity").length > 0) {
+    if (localStorage.getItem("nowcity")) {
       this.city = localStorage.getItem("nowcity");
-      this.gps = localStorage.getItem("nowcity");
     }
   },
   beforeDestroy() {
@@ -269,6 +269,9 @@ export default {
     font-size: 14px;
     line-height: 30px;
   }
+}
+.scrollbar {
+  overflow-x: hidden;
 }
 .recommend-city {
   padding-top: 110px;

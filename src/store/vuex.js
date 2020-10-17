@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
+
 export default new Vuex.Store({
     state: {
         count: 0,
         city: '全国',
-        _token: ''
+        _token: '',
+        cityId: 0,
+
     },
     mutations: {
         add(state, step) {
@@ -14,11 +17,16 @@ export default new Vuex.Store({
         },
         setCity(state, cityName) {
             state.city = cityName
+            localStorage.setItem('city', cityName)
         },
         updateToken(state, _token) {
             state._token = _token
             localStorage.setItem('_token', _token)
-        }
+        },
+        setCityId(state, cityId) {
+            state.cityId = cityId
+            localStorage.setItem('cityId', cityId)
+        },
     },
     actions: {
         addAsync(context, step) {

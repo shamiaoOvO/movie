@@ -1,5 +1,7 @@
 //发送具体的请求
 import http from "@/api/http"
+import store from '../store/vuex'
+
 import {
     nowPlayingListUrl,
     comingSoonListUrl,
@@ -11,23 +13,29 @@ import {
     centerUrl
 } from "@/config/url"
 
+// let cityId = store.state.cityId
 //请求正在热映的列表数据
-export const nowPlayingListData = pageNum => {
+export const nowPlayingListData = (pageNum) => {
     http.defaults.headers.authorization = ""
     http.defaults.headers.info = "film"
-    return http.get(nowPlayingListUrl + pageNum)
+    let cityId = store.state.cityId
+
+    return http.get(nowPlayingListUrl + pageNum + "&cityId=" + cityId)
 }
 //即将上映
-export const comingSoonListData = pageNum => {
+export const comingSoonListData = (pageNum) => {
     http.defaults.headers.authorization = ""
     http.defaults.headers.info = "film"
-    return http.get(comingSoonListUrl + pageNum)
+    let cityId = store.state.cityId
+
+    return http.get(comingSoonListUrl + pageNum + "&cityId=" + cityId)
 }
 
 //请求电影详情数据
 export const movieDetailData = filmId => {
     http.defaults.headers.authorization = ""
     http.defaults.headers.info = "info"
+
     return http.get(movieDetailUrl +
         filmId)
 }
@@ -36,14 +44,18 @@ export const movieDetailData = filmId => {
 export const ticketListData = () => {
     http.defaults.headers.authorization = ""
     http.defaults.headers.info = "ticket"
-    return http.get(ticketListUrl)
+    let cityId = store.state.cityId
+
+    return http.get(ticketListUrl + cityId)
 }
 
 //请求电影院详细数据
-export const cinemaListData = () => {
+export const cinemaListData = async () => {
     http.defaults.headers.authorization = ""
     http.defaults.headers.info = "cinema"
-    return http.get(cinemaListUrl)
+    let cityId = store.state.cityId
+
+    return http.get(cinemaListUrl + cityId)
 }
 
 //请求城市信息数据

@@ -12,7 +12,6 @@
       <!---->
     </div>
     <div class="img">
-      <!-- <img :src="film.poster" /> -->
       <img v-lazy="film.poster" />
     </div>
     <div class="film-detail">
@@ -123,6 +122,19 @@ export default {
     if (this.film.grade == undefined) {
       this.isGrade = false;
     }
+
+    window.addEventListener(
+      "scroll",
+      (e) => {
+        let top = document.documentElement.scrollTop;
+        if (top > 20) {
+          this.isShow = true;
+        } else {
+          this.isShow = false;
+        }
+      },
+      true
+    );
   },
   filters: {
     parsePremiereAt: function (val) {
@@ -145,15 +157,6 @@ export default {
   created() {
     //发起通知,通知APP.vue需要移出底部菜单
     this.eventBus.$emit("footernav", false);
-
-    window.addEventListener("scroll", (e) => {
-      let top = document.documentElement.scrollTop;
-      if (top > 10) {
-        this.isShow = true;
-      } else {
-        this.isShow = false;
-      }
-    });
   },
   beforeDestroy() {
     //发起通知,恢复底部菜单
@@ -169,13 +172,15 @@ export default {
 .detail {
   background-color: rgb(244, 244, 244);
   //   margin-bottom: 50px;
-  overflow: hidden;
+  overflow-x: hidden;
 
   .film-header {
     position: fixed;
     background-color: hsla(0, 0%, 100%, 0);
     color: transparent;
     transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
     width: 100vw;
     height: 44px;
     z-index: 1;
@@ -197,6 +202,8 @@ export default {
   }
   .show-film-header {
     transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
     background-color: #fff;
     color: #191a1b;
   }
@@ -302,6 +309,7 @@ export default {
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
       white-space: nowrap;
     }
     .actors-role {

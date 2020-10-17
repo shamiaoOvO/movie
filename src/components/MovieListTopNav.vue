@@ -2,38 +2,34 @@
   <div>
     <Loading v-if="loading"></Loading>
 
-    <header data-v-4070467a="" class="header">
-      <div data-v-4070467a="" class="left">
+    <header class="header">
+      <div class="left">
         <div
-          data-v-4070467a=""
           class="city"
           data-enter-time="1602495621"
           data-click-fun="track_f_253582"
         >
-          <router-link data-v-4070467a="" to="/city" tag="span">
+          <router-link to="/city" tag="span">
             {{ city | cleaner }}
           </router-link>
           <img
-            data-v-4070467a=""
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAMAAAAIAYw9AAAAOVBMVEVHcEwZGhsZGxsZGhskJCQaGhwbGxsZHR0ZGhsZGhsZGhsZGhsZHBwaGhsaGhwZGxsaGh0bGxsZGhsAwt9XAAAAEnRSTlMA5Z7pB2scPfrK6NJskn6fcnH7htMrAAAAVElEQVQI11XNOQKAIBAEwQEXl0NQ+/+PNfDucIIabaGbnqyHXQHKfC9zgaABVD8Xr8CQlgw5SVLKkBdJ8gmIZhGY/BUoha9qKwDEz/fJJP3y1i5GB2jVA/F2X5USAAAAAElFTkSuQmCC"
             width="6px"
             height="3px"
           />
         </div>
       </div>
-      <div data-v-4070467a="" class="title">
-        <div data-v-4070467a="">影院</div>
+      <div class="title">
+        <div>影院</div>
       </div>
-      <div data-v-4070467a="" class="right">
-        <div data-v-4070467a="">
+      <div class="right">
+        <div>
           <div
-            data-v-4070467a=""
             class="toCinemaSearch"
             data-enter-time="1602495621"
             data-click-fun="track_f_53117"
           >
             <img
-              data-v-4070467a=""
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA2CAMAAABQrCHsAAABlVBMVEVHcEwaGh8/Pz8ZGxszMzMZGhwZGhsZGhsZGhsZGhscHBwnJycZGhskJCQaGh0fHx8ZGhsaGiMeHh4ZGhsZGhsbGxsZJiYaGhsZGhsZGhwZGhwZGxsZGxsaGhsfHx8ZGhsbGxsqKioaGhsbGxsZGxsbGxsZGhwaGh8ZGhskJCQZGxsZHh4ZGxsZGhsaGh0aGhsZGhsZMzMaGh0ZGhseHh4ZGhsZGhseHh4ZGhsZGhsZHh4aGh0aGhsZGhwbGxsaGh4ZIiIbGxsZGhwbGxsZGxsaGh1/f38aGhsZGxshISEZGxsZGxsZGhsZGhwfHx8aGh4aGhsdHR0ZGxv///8ZGhsqKioaGhwbGxtVVVUaGhwbGxsaGh8ZGhsZGxsaGhwZGxsaGhwaGhwgICAiIiIcHBwZGhsZGxsbGxsZGhsZGxsaGhwbGxsZGhsaGiAZGhwaGhsZGxsaGhwZGxsZGhwaGhsZHBwaGhwZHBwaGhwaGh0aGh0ZGhwbGxsaGh0aGhoZGhwaGiEZGxsZHBwZHR0aGhsaGhsZGhsIL5M3AAAAhnRSTlMAOQTsBeP76P73SA3qB2kY+B0i/fRBFKbfx62elq8QtzgG11V5L70w/BXOO6DeV6T2CnLwKsDWIenVMla5mUo6HhysQs9NAsSXF4uE06IITJwjggHMDFhxA5BAMd3Zj52Iah8PG/JmUuCDfS7LJ7aSqXVl0etQYlp8X2i+JXtz0CZ6Wzy4w4GfxwoAAAJjSURBVBgZrcEFUxQBAIbh77qL7m4ElFCxCQWDUFBQaaXDwu56f7cwzHLHsXe7N+Pz6D9pfPehovJvZcWHd42yx1n4uISkkseFTlmZejRHurlHU8pqaJpDruLN6Nvfb6ObxS4OTQ8pM/dVDoQXnszKMPtkIcyBq25lUNQHFDwI6aTQgwKgr0imejuArphOi3UBHb0yEfNAS7fMdbeAJ6ZTIqXQE1QmwR4ojSjdGHgLlVmhF8aU5hfwSdlEgfc6IVICo8puFEpqlWoGfA+V3UMfzCjFMxdEZSUKrmdKWoN5p6w452FNSXuwLGvLsKdjoTj+57L23E88JEM97MiOHaiX4QVsyY4teCFDGazLjnUok6EUamSHA0pl2IAV2bECGzLEISI7IhCXYR+KZEcR7MvwBrZlxza8keEPBGVHEKplKIfXsuM1lMvwCl7KjpfwSoZdWK2VtdpV2NWxOgjKWhDqlLQExbJWDEtKegr+Zllp9sNTpRiEK7JyBQaV6ocXrim7a+D9ohMqwJWnbPJcUKGTWj3QH1JmoX7wtCrNpbNQfU6ZnKuGs5d0ymWgLSFziTbgskx8BXztMtPuAy7myczHOOSfuaF0N87kgx/CDplx+IDAnftKdf9OAPB9C0CgU2YSlRy6d9dx+5akW7cdd+9xqDKhmjD4G2Tq+ghHvJ7vHi9HRq7rwIXzQLlbpm6WFZCqoOymjlQ1AZ+rZG58YnLYlw/k+4YnJ8Z1zL0I1OUpM+dA44BT6Rr8EHYoV/UBCHQqVzUXwf9TubpwHih3K0dVTUCTWzlyLwLvlbOGlkCzctca0z9q9NKFAyAIHQAAAABJRU5ErkJggg=="
               width="18px"
               height="18px"
@@ -84,74 +80,79 @@
       </div>
     </div>
     <div class="cinema-layer"></div>
-    <!-- 需要判断请求的数据是否为空并循环 -->
-    <div data-v-c5eb75dc="" class="cinema-banner-wrap" v-if="hastickets">
-      <ul data-v-c5eb75dc="" class="cinema-list">
-        <li
-          data-v-c5eb75dc=""
-          class="cinema-banner-item"
-          v-for="item in ticketlist"
-          :key="item.bannerId"
-        >
-          <div data-v-c5eb75dc="" class="name">
-            <span data-v-c5eb75dc="" class="title">
-              {{ item.masterTitle }}
-            </span>
-            <span data-v-c5eb75dc="" class="icon">影院券</span>
-          </div>
-          <div data-v-c5eb75dc="" class="type">
-            {{ item.name }}
-          </div>
-        </li>
-      </ul>
-    </div>
-    <!-- 需要循环的数据 -->
-    <div class="cinema-list-wrap">
-      <ul class="cinema-list">
-        <li
-          class="cinema-list-item"
-          v-for="item in cinemaslist"
-          :key="item.cinemaId"
-        >
-          <a
-            href="#"
-            class="cinema-item-wrap"
-            data-enter-time="1602501987"
-            data-click-fun="track_f_967919"
-          >
-            <div class="cinema-info-lf cinema-info">
-              <span class="cinema-name">{{ item.name }}</span>
-              <span class="cinema-address">
-                {{ item.address }}
-              </span>
-            </div>
-            <div class="cinema-info-rt cinema-info">
-              <div class="">
-                <span class="cinema-lowPrice price-fmt">
-                  <i>￥</i>
-                  <span class="interge" style="font-size: 15px">{{
-                    item.lowPrice / 100
-                  }}</span>
+    <!-- 滚动列表 -->
+    <div class="scroll">
+      <div>
+        <!-- 需要判断请求的数据是否为空并循环 -->
+        <div class="cinema-banner-wrap" v-if="hastickets">
+          <ul class="cinema-list">
+            <li
+              class="cinema-banner-item"
+              v-for="item in ticketlist"
+              :key="item.bannerId"
+            >
+              <div class="name">
+                <span class="title">
+                  {{ item.masterTitle }}
                 </span>
-                <span class="upon">起</span>
+                <span class="icon">影院券</span>
               </div>
-              <span class="cinema-gpsAddress">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAA1CAMAAAD1YwKXAAABblBMVEX////s7O7NztHFx8r+/v7AwsbHycy+wMS/wcXCxMje3+H5+frt7e/09PXT1df39/fV1tnz8/T8/Pz6+vv9/f3j5ObGyMv7+/vO0NPBw8ff4OLLzdDBwsbz9PT6+vro6er39/jY2dz29vf4+Pnx8vPs7e7n6OnGyMzJy87P0dTt7u/l5uji4+Xh4uTGx8vExsrNz9L09fXMztHR0tXHyMzT1NfIys3y8/TX2Nvd3uDCw8f4+fnq6+zu7/Dn6Orl5uf6+/vDxMj9/v77+/zX2Nrn5+ns7O3Iys7m5+nx8fLi4+TDxcj19vbk5efS09bKzM/AwcXv7/DQ0tTp6evb3N7c3d/3+PjZ2tzt7e7Dxcnb3N/U1tjQ0tXFx8vR09by8vPj5OXX2dv4+Pj5+fn19fbU1djY2dvS1NbJys7ExcnMzdH5+vrg4ePw8fLLzND+///7/PzP0NPr7O3a293W19rQ0dTk5ebW2Nr8/f3R09WCbK1KAAACgklEQVRIx52UV1vbQBREx7bks7LBNBeMDab3DoGEhJBACr0kpPfee//3eZCFZZDsfJmn3auR9s7s6Ep+tJV+fbnq5OPTqfEZheHT+qyhgsnDvkDaYJxjsHu6T7DORgHsa5mD7dZ098b1S1MAduYYbfkNENtp9ZU+7AK8yvlpJQPFifSxl/vbgSFfl8s2ZBcDek4YWGjzdjMOvO0KFDeQh4LXzR5k34WYNWDgibscg3ynV29MRGN2LJpo9ApjYDYkqXUKJsrFptSReammcu0FfJSkCZhcdUsNjs9lp8EtPi3CdUmzsF6mGTDNkaSVjDQbMGViAnalPrBdQU0OxFvKp7XEwXGP7gN7TT9hzn2UgnhbJTpxSLnLWbis77DjKgXT4nOkxYCrehN69AMOvDaaq6xrhoQkaRTmNAzbkqQoRKp4EYi69wV7ugiujBgkq3hJiEmSPsOWimBJkmxv4cEC21sUlYULdb7XBlkVoLdOf71Q0Jz3OFzvFfijb9BRx78OONRXuFbnPkYgotZ99nM177fLYP+WpmGlZl4y0O4G9qpq5M8agvOSVqfgXI08D0LWkqT38NoK/T/Sk+BOhZwD46HT6QzEygNgBZa6Q2j9ptKVojASTEsvwKmjXacJO/kSOM8q2w6wHwXQLgMlf6Ed4msnaItFuFU9Ju/Aw+O0riwUqrOrK3i5qeS5HS52B/hkBqoqPWBGT/Z8H5xe3z4DPA7QlpuH4cqAbjBwOtCrzrzP0+cOTFvB5pcqWi7EYagr7M5vgIl4UpcaQ7OhkbKWl94LIcjNw3BaGWBTtdCZh3ujoVIrOA/YELXq8NQD8CBZjyarAHa/6uPmFoP6F9y+q//HXzl1QJFrg6y6AAAAAElFTkSuQmCC"
-                  alt="距离"
-                  style="display: none"
-                />
-                <strong>距离未知</strong></span
+              <div class="type">
+                {{ item.name }}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- 需要循环的数据 -->
+        <div class="cinema-list-wrap">
+          <ul class="cinema-list">
+            <li
+              class="cinema-list-item"
+              v-for="item in cinemaslist"
+              :key="item.cinemaId"
+            >
+              <a
+                href="#"
+                class="cinema-item-wrap"
+                data-enter-time="1602501987"
+                data-click-fun="track_f_967919"
               >
-            </div>
-          </a>
-        </li>
-      </ul>
+                <div class="cinema-info-lf cinema-info">
+                  <span class="cinema-name">{{ item.name }}</span>
+                  <span class="cinema-address">
+                    {{ item.address }}
+                  </span>
+                </div>
+                <div class="cinema-info-rt cinema-info">
+                  <div>
+                    <span class="cinema-lowPrice price-fmt">
+                      <i>￥</i>
+                      <span class="interge" style="font-size: 15px">{{
+                        item.lowPrice / 100
+                      }}</span>
+                    </span>
+                    <span class="upon">起</span>
+                  </div>
+                  <span class="cinema-gpsAddress">
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAA1CAMAAAD1YwKXAAABblBMVEX////s7O7NztHFx8r+/v7AwsbHycy+wMS/wcXCxMje3+H5+frt7e/09PXT1df39/fV1tnz8/T8/Pz6+vv9/f3j5ObGyMv7+/vO0NPBw8ff4OLLzdDBwsbz9PT6+vro6er39/jY2dz29vf4+Pnx8vPs7e7n6OnGyMzJy87P0dTt7u/l5uji4+Xh4uTGx8vExsrNz9L09fXMztHR0tXHyMzT1NfIys3y8/TX2Nvd3uDCw8f4+fnq6+zu7/Dn6Orl5uf6+/vDxMj9/v77+/zX2Nrn5+ns7O3Iys7m5+nx8fLi4+TDxcj19vbk5efS09bKzM/AwcXv7/DQ0tTp6evb3N7c3d/3+PjZ2tzt7e7Dxcnb3N/U1tjQ0tXFx8vR09by8vPj5OXX2dv4+Pj5+fn19fbU1djY2dvS1NbJys7ExcnMzdH5+vrg4ePw8fLLzND+///7/PzP0NPr7O3a293W19rQ0dTk5ebW2Nr8/f3R09WCbK1KAAACgklEQVRIx52UV1vbQBREx7bks7LBNBeMDab3DoGEhJBACr0kpPfee//3eZCFZZDsfJmn3auR9s7s6Ep+tJV+fbnq5OPTqfEZheHT+qyhgsnDvkDaYJxjsHu6T7DORgHsa5mD7dZ098b1S1MAduYYbfkNENtp9ZU+7AK8yvlpJQPFifSxl/vbgSFfl8s2ZBcDek4YWGjzdjMOvO0KFDeQh4LXzR5k34WYNWDgibscg3ynV29MRGN2LJpo9ApjYDYkqXUKJsrFptSReammcu0FfJSkCZhcdUsNjs9lp8EtPi3CdUmzsF6mGTDNkaSVjDQbMGViAnalPrBdQU0OxFvKp7XEwXGP7gN7TT9hzn2UgnhbJTpxSLnLWbis77DjKgXT4nOkxYCrehN69AMOvDaaq6xrhoQkaRTmNAzbkqQoRKp4EYi69wV7ugiujBgkq3hJiEmSPsOWimBJkmxv4cEC21sUlYULdb7XBlkVoLdOf71Q0Jz3OFzvFfijb9BRx78OONRXuFbnPkYgotZ99nM177fLYP+WpmGlZl4y0O4G9qpq5M8agvOSVqfgXI08D0LWkqT38NoK/T/Sk+BOhZwD46HT6QzEygNgBZa6Q2j9ptKVojASTEsvwKmjXacJO/kSOM8q2w6wHwXQLgMlf6Ed4msnaItFuFU9Ju/Aw+O0riwUqrOrK3i5qeS5HS52B/hkBqoqPWBGT/Z8H5xe3z4DPA7QlpuH4cqAbjBwOtCrzrzP0+cOTFvB5pcqWi7EYagr7M5vgIl4UpcaQ7OhkbKWl94LIcjNw3BaGWBTtdCZh3ujoVIrOA/YELXq8NQD8CBZjyarAHa/6uPmFoP6F9y+q//HXzl1QJFrg6y6AAAAAElFTkSuQmCC"
+                      alt="距离"
+                      style="display: none"
+                    />
+                    <strong>距离未知</strong></span
+                  >
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from "better-scroll";
 import Loading from "@/components/Loading";
 import { cinemaListData, ticketListData } from "@/api/api";
 import axios from "axios";
@@ -163,20 +164,21 @@ export default {
       ticketlist: [],
       cinemaslist: [],
       hastickets: true,
-      //   nowadd: "",
+      bs: null,
+      height: 0,
     };
   },
-  methods: {
-    // ...mapActions(["setAddress"]),
-  },
+  methods: {},
   computed: {
     ...mapState(["city"]),
   },
   async mounted() {
+    //请求数据
     let rel = await ticketListData();
     let ret = await cinemaListData();
     this.ticketlist = rel.data.data;
     this.cinemaslist = ret.data.data.cinemas;
+
     if (this.ticketlist.length == 0) {
       this.hastickets = false;
     }
@@ -184,47 +186,6 @@ export default {
     if (localStorage.getItem("city").length > 0) {
       this.$store.commit("setCity", localStorage.getItem("city"));
     }
-
-    //定位获取
-    /* var _this = this;
-    getLocation();
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-        alert("浏览器不支持地理定位。");
-      }
-    }
-    function showPosition(position) {
-      var lag = position.coords.longitude; //经度
-      var lat = position.coords.latitude; //纬度
-      axios
-        .get(`https://api.i-lynn.cn/poi?location=${lag},${lat}`)
-        .then((ret) => {
-          let val = ret.data.regeocode.addressComponent.province;
-          _this.$store.commit("setCity", val);
-          //   _this.nowadd = _this.$store.state.city;
-          //   _this.nowadd = val;
-        });
-    }
-    function showError(error) {
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          alert("定位失败,用户拒绝请求地理定位");
-          break;
-        case error.POSITION_UNAVAILABLE:
-          alert("定位失败,位置信息是不可用");
-          break;
-        case error.TIMEOUT:
-          alert("定位失败,请求获取用户位置超时");
-          break;
-        case error.UNKNOWN_ERROR:
-          alert("定位失败,定位系统失效");
-          break;
-      }
-    } */
-    //获取定位城市
-    // this.$store.commit("setCity", this.nowadd);
   },
   components: {
     Loading,
@@ -235,10 +196,8 @@ export default {
     } else {
       this.loading = false;
     }
-
-    //城市选择
-    // this.nowadd = this.$store.state.city;
   },
+  async created() {},
   filters: {
     cleaner(val) {
       return val.split('"').join("");
@@ -353,6 +312,9 @@ export default {
 .cinema-layer {
   padding-top: 94px;
 }
+.scroll {
+  overflow-x: hidden;
+}
 .cinema-list {
   list-style: none;
   padding: 0;
@@ -400,7 +362,7 @@ export default {
 }
 .cinema-list-wrap {
   padding-bottom: 49px;
-  z-index: 100;
+  //   z-index: 1;
   .cinema-list {
     list-style: none;
     padding: 0;

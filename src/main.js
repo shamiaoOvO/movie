@@ -3,6 +3,19 @@ import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import AMap from "vue-amap";
+import {
+    InfiniteScroll
+} from 'mint-ui';
+
+Vue.use(InfiniteScroll);
+
+Vue.use(AMap);
+AMap.initAMapApiLoader({
+    key: "d952b4e9d6b1a56fb84d3f1df36536f8",
+    plugin: ["AMap.Geolocation", "AMap.Geocoder"],
+    v: '1.4.4'
+});
 
 Vue.use(ElementUI)
 
@@ -24,6 +37,11 @@ import store from '@/store/vuex'
 let _token = localStorage.getItem("_token")
 if (_token) {
     store.commit('updateToken', _token)
+}
+
+let cityId = localStorage.getItem("cityId")
+if (cityId) {
+    store.commit('setCityId', cityId)
 }
 
 new Vue({

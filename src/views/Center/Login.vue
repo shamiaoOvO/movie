@@ -69,23 +69,6 @@ export default {
     };
   },
   methods: {
-    /* subBtn(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          axios
-            .post("/api/v1/login", {
-              mobile: this.ruleForm.mobile,
-              password: this.ruleForm.password,
-            })
-            .then((ret) => {
-              console.log(ret.data);
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    }, */
     subBtn(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {

@@ -192,9 +192,9 @@ export default {
 .center-view .avatar {
   text-align: center;
   margin-top: -44px;
-  height: 140px;
+  height: 110px;
   padding-left: 22px;
-  padding-top: 64px;
+  padding-top: 60px;
   background: url(https://assets.maizuo.com/h5/v5/public/app/img/bg.6837f67.png);
   background-size: cover;
   display: -webkit-box;
@@ -374,7 +374,7 @@ export default {
   outline: none;
   position: absolute;
   border: 0;
-  top: calc(100vh - 85px);
+  top: 115%;
   left: 50%;
   transform: translateX(-50%);
 }

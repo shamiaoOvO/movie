@@ -95,12 +95,21 @@
         </div>
       </Swiper>
     </div>
+    <div
+      class="goSchedule"
+      @click="goSchedule(film.filmId)"
+      v-show="film.isSale"
+    >
+      选座购票
+    </div>
   </div>
 </template>
 
 <script>
 import { movieDetailData } from "@/api/api";
 import Swiper from "@/components/Swiper";
+import { MessageBox } from "mint-ui";
+import "mint-ui/lib/style.css";
 //引入moment
 import moment from "moment";
 export default {
@@ -135,6 +144,24 @@ export default {
       },
       true
     );
+    //发起通知,通知APP.vue需要移出底部菜单
+    this.eventBus.$emit("footernav", false);
+
+    //判断是否有排片安排
+    if (this.film.isSale == false) {
+      MessageBox({
+        title: "提示",
+        message: "该影片目前没有排期,去看看其他电影吧",
+        showCancelButton: true,
+        confirmButtonText: "同意",
+        cancelButtonText: "拒绝",
+        confirmButtonClass: "confirmBtn",
+      }).then((val) => {
+        if (val == "confirm") {
+          this.$router.go(-1);
+        }
+      });
+    }
   },
   filters: {
     parsePremiereAt: function (val) {
@@ -150,13 +177,15 @@ export default {
     goBack: function () {
       this.$router.go(-1);
     },
+    goSchedule: function (filmId) {
+      this.$router.push({
+        name: "cinemas",
+        params: { filmId },
+      });
+    },
   },
   components: {
     Swiper,
-  },
-  created() {
-    //发起通知,通知APP.vue需要移出底部菜单
-    this.eventBus.$emit("footernav", false);
   },
   beforeDestroy() {
     //发起通知,恢复底部菜单
@@ -165,7 +194,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 [v-cloak] {
   display: none;
 }
@@ -335,7 +364,7 @@ export default {
   .photos {
     background-color: #fff;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 49px;
     padding: 15px 0 20px;
 
     .photos-title-text {
@@ -370,5 +399,21 @@ export default {
       }
     }
   }
+  .goSchedule {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 49px;
+    width: 100%;
+    text-align: center;
+    background-color: #ff5f16;
+    color: #fff;
+    font-size: 16px;
+    line-height: 49px;
+    z-index: 2100;
+  }
+}
+.confirmBtn {
+  color: #ff5f16 !important;
 }
 </style>

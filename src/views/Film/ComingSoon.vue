@@ -1,6 +1,16 @@
 <template>
   <div>
-    <FilmList :list="list" :key="'film' + list.length" :type="type"></FilmList>
+    <v-touch
+      v-on:swipeleft="onSwipeLeft"
+      v-on:swiperight="onSwipeRigth"
+      :swipe-options="{ direction: 'horizontal' }"
+    >
+      <FilmList
+        :list="list"
+        :key="'film' + list.length"
+        :type="type"
+      ></FilmList>
+    </v-touch>
   </div>
 </template>
 
@@ -21,6 +31,14 @@ export default {
   },
   components: {
     FilmList,
+  },
+  methods: {
+    onSwipeLeft: function () {
+      this.$router.push({ path: "/cinema" });
+    },
+    onSwipeRigth: function () {
+      this.$router.push({ path: "/film/nowplaying" });
+    },
   },
 };
 </script>

@@ -7,6 +7,11 @@ import AMap from "vue-amap";
 import {
     InfiniteScroll
 } from 'mint-ui';
+import VueTouch from 'vue-touch'
+
+Vue.use(VueTouch, {
+    name: 'v-touch'
+})
 
 Vue.use(InfiniteScroll);
 

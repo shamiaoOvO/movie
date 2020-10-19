@@ -10,7 +10,9 @@ import {
     ticketListUrl,
     cityListUrl,
     loginUrl,
-    centerUrl
+    centerUrl,
+    showCinemaListUrl,
+    showCinemasDayListUrl
 } from "@/config/url"
 
 // let cityId = store.state.cityId
@@ -85,6 +87,25 @@ export const cityListData = async () => {
     hotList = cities.filter(item => item.isHot == 1)
 
     return Promise.resolve([dataList, indexList, hotList])
+}
+
+//请求具体电影的电影院信息
+export const showCinemaListData = (filmId) => {
+    http.defaults.headers.authorization = ""
+    http.defaults.headers.info = "showcinema"
+    let cityId = store.state.cityId
+    return http.get(showCinemaListUrl + filmId + "&cityId=" + cityId)
+}
+
+//具体每天的影院信息
+export const showCinemasDayListData = (string) => {
+    http.defaults.headers.authorization = ""
+    http.defaults.headers.info = "cinemasday"
+    let cityId = store.state.cityId
+    return http.post(showCinemasDayListUrl, {
+        "cityId": cityId,
+        "cinemaIds": string
+    })
 }
 
 export const userLogin = (data) => {

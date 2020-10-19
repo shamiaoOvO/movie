@@ -24,7 +24,12 @@ axios.interceptors.request.use(
         if (info == "city") {
             host = "mall.film-ticket.city.list"
         }
-        //其他的可以继续添加
+        if (info == "showcinema") {
+            host = "mall.film-ticket.cinema.film-show-cinema"
+        }
+        if (info == "cinemasday") {
+            host = "mall.film-ticket.cinema.batch-cinema"
+        }
         let cityId = store.state.cityId
         //请求头
         if (config.headers.authorization) {

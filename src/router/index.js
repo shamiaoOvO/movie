@@ -11,6 +11,7 @@ import detailRouter from './routes/detail'
 import cityRouter from './routes/city'
 import vuexRouter from './routes/vuex'
 import loginRouter from './routes/login'
+import cinemasRouter from './routes/cinemas.js'
 
 const routes = [{
         path: '/',
@@ -22,7 +23,8 @@ const routes = [{
     detailRouter,
     cityRouter,
     vuexRouter,
-    loginRouter
+    loginRouter,
+    cinemasRouter
 ]
 
 const originalPush = VueRouter.prototype.push;

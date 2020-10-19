@@ -6,38 +6,56 @@
     infinite-scroll-distance="10"
     :style="{ height: height + 'px' }"
   >
-    <Loadingthis v-if="loadingthis"></Loadingthis>
-
-    <!-- 展示数据 -->
-    <div
-      class="item"
-      v-for="item in data"
-      :key="item.filmId"
-      @click="goDetail(item.filmId)"
+    <v-touch
+      v-on:swipeleft="onSwipeLeft"
+      :swipe-options="{ direction: 'horizontal' }"
     >
-      <div class="left">
-        <img v-lazy="item.poster" />
-      </div>
-      <div class="middle">
-        <div>
-          <span>{{ item.name }}</span> <span>{{ item.filmType.name }}</span>
+      <Loadingthis v-if="loadingthis"></Loadingthis>
+
+      <!-- 展示数据 -->
+      <div
+        class="item"
+        v-for="item in data"
+        :key="item.filmId"
+        @click="goDetail(item.filmId)"
+      >
+        <div class="left">
+          <img v-lazy="item.poster" />
         </div>
-        <div v-if="type == 1">
-          <span>观众评分 </span>
-          <span class="grade">{{ item.grade }}</span>
+        <div class="middle">
+          <div>
+            <span>{{ item.name }}</span> <span>{{ item.filmType.name }}</span>
+          </div>
+          <div v-if="type == 1">
+            <span>观众评分 </span>
+            <span class="grade">{{ item.grade }}</span>
+          </div>
+          <div v-else>暂无评分</div>
+          <div>主演：{{ item.actors | parseActor }}</div>
+          <div v-if="type == 1">{{ item.nation }} | {{ item.runtime }}分钟</div>
+          <div v-else>上映日期：{{ item.premiereAt | parsePremiereAt }}</div>
         </div>
-        <div v-else>暂无评分</div>
-        <div>主演：{{ item.actors | parseActor }}</div>
-        <div v-if="type == 1">{{ item.nation }} | {{ item.runtime }}分钟</div>
-        <div v-else>上映日期：{{ item.premiereAt | parsePremiereAt }}</div>
+        <div
+          class="right"
+          v-if="type == 1"
+          @click.stop="goSchedule(item.filmId)"
+        >
+          购票
+        </div>
+        <div
+          class="right"
+          v-else
+          v-show="item.isPresale"
+          @click.stop="goSchedule(item.filmId)"
+        >
+          预购
+        </div>
       </div>
-      <div class="right" v-if="type == 1">购票</div>
-      <div class="right" v-else>预购</div>
-    </div>
-    <div v-if="isloading" class="footer">
-      <van-loading size="24px" class="footercontent">加载中...</van-loading>
-    </div>
-    <div v-if="isend" class="footer">加载完毕</div>
+      <div v-if="isloading" class="footer">
+        <van-loading size="24px" class="footercontent">加载中...</van-loading>
+      </div>
+      <div v-if="isend" class="footer">加载完毕</div>
+    </v-touch>
   </div>
 </template>
 
@@ -121,6 +139,15 @@ export default {
         return;
       }
       this.goData();
+    },
+    goSchedule: function (filmId) {
+      this.$router.push({
+        name: "cinemas",
+        params: { filmId },
+      });
+    },
+    onSwipeLeft: function () {
+      this.$router.push({ path: "/film/comingsoon" });
     },
   },
   mounted() {
@@ -206,7 +233,6 @@ export default {
       position: relative;
       top: calc(50% - 12.5px);
       right: 15px;
-      z-index: -1;
 
       &::after {
         content: " ";

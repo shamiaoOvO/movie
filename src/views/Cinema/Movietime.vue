@@ -209,14 +209,22 @@ export default {
     this.movies = res.data.data.films;
     this.filmId = this.movies[0].filmId;
 
-    //初始电影排片
-    let result = await scheduleData(
-      this.$route.params.filmId,
-      this.$route.params.cinemaId,
-      this.$route.params.date
-    );
-    this.schedules = result.data.data.schedules;
-    // console.log(result.data.data.schedules);
+    if (this.$route.params.date) {
+      //初始电影排片
+      let result = await scheduleData(
+        this.$route.params.filmId,
+        this.$route.params.cinemaId,
+        this.$route.params.date
+      );
+      this.schedules = result.data.data.schedules;
+    } else {
+      let result = await scheduleData(
+        this.$route.params.filmId,
+        this.$route.params.cinemaId,
+        this.movies[0].showDate[0]
+      );
+      this.schedules = result.data.data.schedules;
+    }
 
     //背景图片初始化
     this.currentSrc = this.movies[0].poster;

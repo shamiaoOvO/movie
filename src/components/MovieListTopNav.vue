@@ -110,9 +110,9 @@
               class="cinema-list-item"
               v-for="item in cinemaslist"
               :key="item.cinemaId"
+              @click.stop="goSchedule(item.cinemaId)"
             >
-              <a
-                href="#"
+              <div
                 class="cinema-item-wrap"
                 data-enter-time="1602501987"
                 data-click-fun="track_f_967919"
@@ -142,7 +142,7 @@
                     <strong>距离未知</strong></span
                   >
                 </div>
-              </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -168,7 +168,13 @@ export default {
       height: 0,
     };
   },
-  methods: {},
+  methods: {
+    goSchedule(cinemaId) {
+      this.$router.push(`/cinema/${cinemaId}/film`, {
+        params: { cinemaId },
+      });
+    },
+  },
   computed: {
     ...mapState(["city"]),
   },

@@ -1,7 +1,6 @@
 <template>
   <div class="cinemas">
     <van-tabs v-model="activeName" @click="handleClick($event)">
-      <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
       <!-- header -->
       <div class="filter">
         <div class="tab">
@@ -69,9 +68,9 @@
               class="cinema-list-item"
               v-for="(val, key) in cinemasarr"
               :key="key"
+              @click="goTimeList(val.cinemaId, filmId, item.showDate)"
             >
-              <a
-                href="#"
+              <div
                 class="cinema-item-wrap"
                 data-enter-time="1602501987"
                 data-click-fun="track_f_967919"
@@ -101,7 +100,7 @@
                     <strong>距离未知</strong></span
                   >
                 </div>
-              </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -134,6 +133,7 @@ export default {
       cinemasList: [],
       cinemasstr: "",
       cinemasarr: [],
+      filmId: 0,
     };
   },
   async mounted() {
@@ -143,6 +143,9 @@ export default {
     let ret = await showCinemaListData(this.$route.params.filmId);
     this.cinemasList = ret.data.data.showCinemas;
 
+    //电影ID
+    this.filmId = this.$route.params.filmId - 0;
+
     //判断电影券列表是否显示
     if (this.ticketlist.length == 0) {
       this.hastickets = false;
@@ -151,9 +154,7 @@ export default {
     this.cinemasList.sort(this.sortFun("showDate"));
 
     //请求下标为0的数据
-    this.cinemasstr = this.cinemasList[0].cinemaList.join(",");
-    let result = await showCinemasDayListData(this.cinemasstr);
-    this.cinemasarr = result.data.data.cinemas;
+    this.handleClick(0);
   },
   methods: {
     async handleClick(event) {
@@ -161,6 +162,7 @@ export default {
       let result = await showCinemasDayListData(this.cinemasstr);
       this.cinemasarr = result.data.data.cinemas;
     },
+    //排序
     sortFun: function (attr, rev) {
       //第二个参数没有传递 默认升序排列
       if (rev == undefined) {
@@ -168,7 +170,6 @@ export default {
       } else {
         rev = rev ? 1 : -1;
       }
-
       return function (a, b) {
         a = a[attr];
         b = b[attr];
@@ -180,6 +181,11 @@ export default {
         }
         return 0;
       };
+    },
+    goTimeList(cinemaId, filmId, date) {
+      this.$router.push(`/cinema/${cinemaId}/film/${filmId}/${date}`, {
+        params: { cinemaId, filmId, date },
+      });
     },
   },
   filters: {
@@ -193,6 +199,7 @@ export default {
 <style lang="scss" >
 .cinemas {
   margin-top: 44px;
+  overflow-x: hidden;
 }
 
 .el-tabs__nav-scroll {

@@ -12,7 +12,10 @@ import {
     loginUrl,
     centerUrl,
     showCinemaListUrl,
-    showCinemasDayListUrl
+    showCinemasDayListUrl,
+    cinemaUrl,
+    moviesListUrl,
+    scheduleUrl,
 } from "@/config/url"
 
 // let cityId = store.state.cityId
@@ -106,6 +109,27 @@ export const showCinemasDayListData = (string) => {
         "cityId": cityId,
         "cinemaIds": string
     })
+}
+
+//影院排片题目信息
+export const cinemaData = (cinemaId) => {
+    http.defaults.headers.authorization = ""
+    http.defaults.headers.info = "cinemamsg"
+    return http.get(cinemaUrl + cinemaId)
+}
+
+//影片列表
+export const moviesListData = (cinemaId) => {
+    http.defaults.headers.authorization = ""
+    http.defaults.headers.info = "movieslist"
+    return http.get(moviesListUrl + cinemaId)
+}
+
+//影片排片信息
+export const scheduleData = (filmId, cinemaId, date) => {
+    http.defaults.headers.authorization = ""
+    http.defaults.headers.info = "schedule"
+    return http.get(scheduleUrl + cinemaId + "&filmId=" + filmId + "&date=" + date)
 }
 
 export const userLogin = (data) => {

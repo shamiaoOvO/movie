@@ -30,6 +30,15 @@ axios.interceptors.request.use(
         if (info == "cinemasday") {
             host = "mall.film-ticket.cinema.batch-cinema"
         }
+        if (info == "cinemamsg") {
+            host = "mall.film-ticket.cinema.info"
+        }
+        if (info == "movieslist") {
+            host = "mall.film-ticket.film.cinema-show-film"
+        }
+        if (info == "schedule") {
+            host = "mall.film-ticket.schedule.list"
+        }
         let cityId = store.state.cityId
         //请求头
         if (config.headers.authorization) {

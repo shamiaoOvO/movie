@@ -15,6 +15,12 @@ export const showCinemaListUrl = "gateway/?k=2146357&filmId="
 
 export const showCinemasDayListUrl = "gateway?k=9475696"
 
+export const cinemaUrl = "gateway/?k=9623339&cinemaId="
+
+export const moviesListUrl = "gateway/?k=6799218&cinemaId="
+
+export const scheduleUrl = "gateway/?k=7447957&cinemaId="
+
 export const loginUrl = "http://123.57.55.107:3000/api/v1/login"
 
 export const centerUrl = "http://123.57.55.107:3000/api/v1/user_info"

@@ -1,6 +1,10 @@
 <template>
   <div class="cinemas">
-    <van-tabs v-model="activeName" @click="handleClick($event)">
+    <van-tabs
+      v-model="activeName"
+      @click="handleClick($event)"
+      :ellipsis="false"
+    >
       <!-- header -->
       <div class="filter">
         <div class="tab">

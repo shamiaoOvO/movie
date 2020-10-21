@@ -1,5 +1,5 @@
 <template>
-  <div class="cinema-schedule">
+  <div class="cinema-schedule" v-show="webshow">
     <div class="header-left">
       <img
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAA2CAMAAACRK2tAAAAAkFBMVEVHcEwcHBwZGhsaGhwZHBwqKioZGhv///8bGxs/Pz8ZGhseHh4eHh4cHBwZGxsaGhsZGxsfHx8ZGhwZGhsZGhsdHR0ZGhsZGhsaGhwbGxsZGhsbGxsZGxseHh4ZGxsZGhsaGhskJCQZGxsaGhwZGxsZGhwaGhwZGhwZGhsZHh4fHx8aGhsZGhsZGhsZGhsZGhteFmxMAAAAL3RSTlMAEv1YdgzJAUsE+hkhP5WksQi+0/c08uWGStxnZirs3c0HsoeWo4W91DMp6+T28faGh4gAAADjSURBVDjLxZXZkoJADEUbVxBQlG1AYRZ3Z/T8/9/5gK9JqgZL83puVVd3TjrO/bumfjVVA3PwNf4BVAofAXvliA2QBDIfDuD4LXN/BpOxzOMMUk/meQF1KPOmhb9I5lEJvxeZhzXczjL3UrjGMh9PYKZ0YLmCwVDmQQJsFAEWwEgXgIMhwNwQYNFTgNXyfQK4Lygj1yeQF/CpHeHiDE6elrCuaT+Uc2vgJ3A9mtW1e2f9GGzVP8dSrpN2rSUs7e3B6UYvi7VEWEORa4mohLbREk37HD3Sl+iRPEGPqtdCsVfSo+6AByDPg79r1AAAAABJRU5ErkJggg=="
@@ -112,7 +112,13 @@
           />
         </div>
 
-        <van-tabs v-model="activeName" @click="handleClick($event)">
+        <van-tabs
+          v-model="activeName"
+          @click="handleClick($event)"
+          animated
+          :ellipsis="false"
+          v-if="tagshow"
+        >
           <van-tab
             :title="item | turntime"
             v-for="(item, index) in showDate"
@@ -167,6 +173,8 @@ Vue.use(Tabs);
 import Swiper from "swiper";
 import "swiper/swiper-bundle.min.css";
 import { cinemaData, moviesListData, scheduleData } from "@/api/api";
+import { MessageBox } from "mint-ui";
+import "mint-ui/lib/style.css";
 export default {
   data() {
     return {
@@ -194,6 +202,10 @@ export default {
       showDate: [],
       //选中日期的排片
       schedules: [],
+      //网页是否显示
+      webshow: false,
+      //tag是否显示
+      tagshow: true,
     };
   },
   async mounted() {
@@ -207,7 +219,28 @@ export default {
     //电影列表
     let res = await moviesListData(this.$route.params.cinemaId);
     this.movies = res.data.data.films;
-    this.filmId = this.movies[0].filmId;
+
+    //movies中有数据时
+    if (this.movies.length) {
+      //显示页面
+      this.webshow = true;
+      //获取filmId
+      this.filmId = this.movies[0].filmId;
+    } else {
+      MessageBox({
+        title: "提示",
+        message: "该影院目前没有电影安排,去其他影院看看吧",
+        // showCancelButton: true,
+        confirmButtonText: "同意",
+        cancelButtonText: "拒绝",
+        confirmButtonClass: "confirmBtn",
+      }).then((val) => {
+        if (val == "confirm") {
+          this.$router.go(-1);
+        }
+      });
+      return;
+    }
 
     if (this.$route.params.date) {
       //初始电影排片
@@ -216,14 +249,24 @@ export default {
         this.$route.params.cinemaId,
         this.$route.params.date
       );
-      this.schedules = result.data.data.schedules;
+      if (result.data.status == 0) {
+        this.schedules = result.data.data.schedules;
+      } else {
+        this.tagshow = false;
+        // alert(ret.data.msg);
+      }
     } else {
       let result = await scheduleData(
-        this.$route.params.filmId,
+        this.movies[0].filmId,
         this.$route.params.cinemaId,
         this.movies[0].showDate[0]
       );
-      this.schedules = result.data.data.schedules;
+      if (result.data.status == 0) {
+        this.schedules = result.data.data.schedules;
+      } else {
+        this.tagshow = false;
+        // alert(ret.data.msg);
+      }
     }
 
     //背景图片初始化
@@ -312,7 +355,12 @@ export default {
         this.$route.params.cinemaId,
         this.showDate[event]
       );
-      this.schedules = ret.data.data.schedules;
+      if (ret.data.status != -1) {
+        this.schedules = ret.data.data.schedules;
+      } else {
+        this.tagshow = false;
+        // alert(ret.data.msg);
+      }
     },
     goDetail(filmId) {
       this.$router.push({ name: "detail", params: { filmId } });
